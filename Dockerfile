@@ -1,7 +1,6 @@
 FROM ubuntu:20.04
 ENV ANSIBLE_VERSION 9.5.1
-RUN useradd -m ansible
-RUN adduser --disabled-password --gecos '' -m 
+RUN adduser --disabled-password --gecos ''
 RUN adduser docker sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
