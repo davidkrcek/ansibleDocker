@@ -6,7 +6,7 @@ RUN adduser docker sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
 RUN chown -R ansible:users /home/ansible/.ssh
-RUN echo "Host *.haribo.dom\n\tStrictHostKeyChecking no\n" >> /home/ansible/.ssh/config
+RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> /home/ansible/.ssh/config
 
 RUN apt-get update; \
     apt-get install -y gcc python3; \
