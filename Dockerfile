@@ -1,14 +1,14 @@
 FROM ubuntu:20.04
 ENV ANSIBLE_VERSION 9.5.1
-RUN adduser --disabled-password --gecos ''
-RUN adduser docker sudo
+RUN apt-get update
+RUN apt-get install sudo
+RUN apt-get install zsh -y && apt-get install -y git
+RUN useradd -m -s /bin/zsh -G sudo ansible
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
 RUN chown -R ansible:users /home/ansible/.ssh
 RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> /home/ansible/.ssh/config
-
-RUN apt-get update; \
-    apt-get install -y gcc python3; \
+RUN apt-get install -y gcc python3; \
     apt-get install -y python3-pip; \
     apt-get install zsh -y && apt-get install -y git; \
     apt-get install -y openssh-client; \
