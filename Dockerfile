@@ -1,16 +1,15 @@
 FROM ubuntu:latest
 RUN apt-get update
-RUN apt-get install sudo -y 
-RUN apt-get install zsh git -y 
+RUN apt-get install zsh git sudo -y 
 RUN useradd -m -s /bin/zsh -G sudo ansible
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
 RUN chown -R ansible:users /home/ansible/.ssh
 RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> /home/ansible/.ssh/config
-RUN apt-get install -y gcc python3 python3-pip; \
-    apt-get install -y wget curl openssh-client; \
-    apt-get install -y locales-all;\
-    apt-get clean all
+RUN apt-get install -y gcc python3 python3-pip
+RUN apt-get install -y wget curl openssh-client ca-certificate
+RUN apt-get install -y locales-all
+RUN apt-get clean all
 USER ansible
 
 ENV ZSH="/home/ansible/.oh-my-zsh"
