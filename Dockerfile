@@ -7,7 +7,8 @@ RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
 RUN chown -R ansible:users /home/ansible/.ssh
 RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> /home/ansible/.ssh/config
 RUN apt-get install -y gcc python3 python3-pip
-RUN apt-get install -y wget curl openssh-client ca-certificate
+RUN apt-get install -y wget curl openssh-client 
+RUN apt-get install --reinstall -y ca-certificates
 RUN apt-get install -y locales-all
 RUN apt-get clean all
 USER ansible
