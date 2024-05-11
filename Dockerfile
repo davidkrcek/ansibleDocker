@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 RUN apt-get update
 RUN apt-get install zsh git sudo -y 
-RUN apt-get install apt-transport-https ca-certificates -y && update-ca-certificates 
+RUN apt-get install apt-transport-https ca-certificates -y 
+ADD ./cacerts/* /usr/local/share/ca-certificates/
+RUN update-ca-certificates 
 RUN useradd -m -s /bin/zsh -G sudo ansible
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/ansible/.ssh && mkdir -p /install/ansible
