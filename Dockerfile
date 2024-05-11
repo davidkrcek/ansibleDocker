@@ -3,7 +3,7 @@ FROM ubuntu:latest
 ARG ANSIBLE_USER="ansible"
 ARG ANSIBLE_HOME="/home/ansible"
 ARG ANSIBLE_WORKDIR="/install/ansible"
-ENV VENV_NAME="/opt/venv"
+ENV VENV_NAME="${ANSIBLE_HOME}/venv"
 # Update the repositories and refresh system
 RUN apt-get update
 # Install zsh and git
