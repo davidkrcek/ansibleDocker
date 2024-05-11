@@ -1,10 +1,9 @@
 FROM ubuntu:latest
 # Environments
-ENV ANSIBLE_USER = ansible
-ENV ANSIBLE_HOME = /home/ansible
-ENV ANSIBLE_WORKDIR = /install/ansible
-ENV VENV_NAME = /opt/vnenv
-
+ARG ANSIBLE_USER="ansible"
+ARG ANSIBLE_HOME="/home/ansible"
+ARG ANSIBLE_WORKDIR="/install/ansible"
+ENV VENV_NAME="/opt/venv"
 # Update the repositories and refresh system
 RUN apt-get update
 # Install zsh and git
@@ -14,7 +13,7 @@ RUN apt-get install apt-transport-https ca-certificates -y
 ADD ./cacerts/* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 # create ansible user
-RUN useradd -m -s /bin/zsh -G sudo ${ANSIBLE_USER}
+RUN useradd -m -s /bin/zsh -G sudo "${ANSIBLE_USER}"
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p "${ANSIBLE_HOME}"/.ssh && mkdir -p "${ANSIBLE_WORKDIR}"
 RUN chown -R ansible:users "${ANSIBLE_HOME}"/.ssh
