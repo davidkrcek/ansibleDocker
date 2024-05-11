@@ -23,7 +23,7 @@ RUN apt-get clean all
 
 #switch to ansible user and install and configure zsh/ohmayzsh
 USER ansible
-RUN python3 -m venv /opt/venv
+RUN python3 -m venv ~/venv
 ENV PATH="/opt/venv/bin:/home/ansible/.local/bin:$PATH"
 ENV ZSH="/home/ansible/.oh-my-zsh"
 RUN sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
