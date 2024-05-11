@@ -26,10 +26,9 @@ RUN apt-get install -y wget curl openssh-client
 RUN apt-get install -y locales-all
 RUN apt-get clean all
 
-RUN python3 -m venv "${VENV_NAME}"
-
 #switch to ansible user and install and configure zsh/ohmayzsh
 USER ansible
+RUN python3 -m venv "${VENV_NAME}"
 SHELL ["/bin/bash", "-c"]
 RUN source "${VENV_NAME}"/bin/activate 
 ENV PATH="${VENV_NAME}/bin:/home/ansible/.local/bin:${PATH}"
