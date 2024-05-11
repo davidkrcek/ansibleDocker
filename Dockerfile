@@ -41,16 +41,7 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH}/custom/pl
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH}/custom/plugins/zsh-syntax-highlighting" ;\
     git clone --depth 1 https://github.com/junegunn/fzf.git "/home/ansible/.fzf" ;\
     /home/ansible/.fzf/install
-ADD zshrc_config.txt ~/.zshrc
-# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
-#     -t https://github.com/denysdovhan/spaceship-prompt \
-#     -a 'SPACESHIP_PROMPT_ADD_NEWLINE="false"' \
-#     -a 'SPACESHIP_PROMPT_SEPARATE_LINE="false"' \
-#     -p git \
-#     -p ssh-agent \
-#     -p https://github.com/zsh-users/zsh-autosuggestions \
-#     -p https://github.com/zsh-users/zsh-completions
-
+COPY zshrc_config.txt ~/.zshrc
 # Upgrade pip to the lastest in user context
 RUN pip3 install --upgrade pip; 
 # Finaly install Ansible and set environment
