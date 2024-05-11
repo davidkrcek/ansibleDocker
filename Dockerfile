@@ -15,7 +15,7 @@ RUN apt-get install zsh git sudo -y
 
 # Add local certificates for zscaler & Co. support later in git
 RUN apt-get install apt-transport-https ca-certificates -y 
-ADD ./cacerts/* /usr/local/share/ca-certificates/
+COPY ./cacerts* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
 # create ansible user
