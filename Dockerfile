@@ -29,7 +29,7 @@ RUN mv /tmp/cacerts/* /usr/local/share/ca-certificates/
 #COPY ./cacerts* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
-# create ansible user
+# create ansible user 
 RUN echo create user "${ANSIBLE_USER}"
 RUN useradd -m -s /bin/zsh -G sudo "${ANSIBLE_USER}"
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
