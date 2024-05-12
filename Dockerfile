@@ -8,20 +8,17 @@ ARG ANSIBLE_WORKDIR="/install/ansible"
 ENV VENV_NAME="${ANSIBLE_HOME}/venv"
 
 # Update the repositories and refresh system
-RUN echo Update system .....
 RUN apt-get update
 
 # Install zsh and git
-RUN echo Install software 
 RUN apt-get install zsh git sudo -y 
 # Install Pyhton3 and Python3-pip and other tools
 # and clean up all
-RUN apt-get install -y gcc python3 python3-pip python3-venv
-RUN apt-get install -y wget curl openssh-client vim
-RUN apt-get install -y locales-all
+RUN apt-get install -y gcc python3 python3-pip python3-venv ; \
+    apt-get install -y wget curl openssh-client vim ; \
+    apt-get install -y locales-all
 RUN apt-get clean all
 
-RUN echo Copy local certificates ....
 # Add local certificates for zscaler & Co. support later in git
 RUN apt-get install apt-transport-https ca-certificates -y 
 COPY config/cacerts /tmp/cacerts
@@ -30,7 +27,6 @@ RUN mv /tmp/cacerts/* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
 # create ansible user 
-RUN echo create user "${ANSIBLE_USER}"
 RUN useradd -m -s /bin/zsh -G sudo "${ANSIBLE_USER}"
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p "${ANSIBLE_HOME}"/.ssh && mkdir -p "${ANSIBLE_WORKDIR}"
@@ -38,7 +34,6 @@ RUN chown -R ansible:users "${ANSIBLE_HOME}"/.ssh
 RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> "${ANSIBLE_HOME}"/.ssh/config
 
 #switch to ansible user and install and configure zsh/ohmayzsh
-RUN echo Install oh-my-zsh
 USER ansible
 SHELL ["/bin/bash", "-c"]
 
@@ -59,16 +54,13 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH}/custom/pl
 
 
 # Upgrade pip to the lastest in user context
-RUN echo Install Ansible with pip
 RUN pip3 install --upgrade pip; 
 # Finaly install Ansible and set environment
 RUN pip3 install ansible;
 
 # copy ssh keys and ZSH configuration into image
-RUN echo zsh config and ssh keys
 COPY config "${ANSIBLE_HOME}/config"
 RUN mv "${ANSIBLE_HOME}/config/zsh/.zshrc" "${ANSIBLE_HOME}/" ; \
-#COPY zshrc_config.txt "${ANSIBLE_HOME}"/.zshrc
     mv "${ANSIBLE_HOME}/config/ssh_keys/*" "${ANSIBLE_HOME}/.ssh/"
 RUN rm -rf "${ANSIBLE_HOME}/config"
 
