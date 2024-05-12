@@ -30,7 +30,7 @@ RUN update-ca-certificates
 RUN useradd -m -s /bin/zsh -G sudo "${ANSIBLE_USER}"
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p "${ANSIBLE_HOME}"/.ssh && mkdir -p "${ANSIBLE_WORKDIR}"
-RUN chown -R ansible:users "${ANSIBLE_HOME}"/.ssh
+RUN chown -R ansible:ansible "${ANSIBLE_HOME}"/.ssh
 RUN echo "Host * \n\tStrictHostKeyChecking no\n" >> "${ANSIBLE_HOME}"/.ssh/config
 
 #switch to ansible user and install and configure zsh/ohmayzsh
@@ -60,9 +60,9 @@ RUN pip3 install ansible;
 
 # copy ssh keys and ZSH configuration into image
 COPY config "${ANSIBLE_HOME}/config"
-RUN mv "${ANSIBLE_HOME}/config/zsh/.zshrc" "${ANSIBLE_HOME}/" ; \
-    mv "${ANSIBLE_HOME}/config/ssh_keys/*" "${ANSIBLE_HOME}/.ssh/"
-RUN rm -rf "${ANSIBLE_HOME}/config"
+RUN echo"${ANSIBLE_HOME}/config/zsh/.zshrc" > "${ANSIBLE_HOME}/.zshrc" ; \
+    cp "${ANSIBLE_HOME}/config/ssh_keys/*" "${ANSIBLE_HOME}/.ssh/"
+RUN sudo rm -rf "${ANSIBLE_HOME}/config"
 
 # Set the default shell to zsh
 CMD ["/bin/zsh"]    
