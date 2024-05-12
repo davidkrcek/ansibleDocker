@@ -1,4 +1,4 @@
-# Latest Minimal Ubuntu Image with Ansible 
+# Latest Minimal Ubuntu Image
 FROM ubuntu:latest
 
 # Environments
@@ -15,7 +15,9 @@ RUN apt-get install zsh git sudo -y
 
 # Add local certificates for zscaler & Co. support later in git
 RUN apt-get install apt-transport-https ca-certificates -y 
-COPY ./cacerts* /usr/local/share/ca-certificates/
+COPY config/cacerts /tmp
+RUN mv /tmp/cacerts/* /usr/local/share/ca-certificates/
+#COPY ./cacerts* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
 # create ansible user
@@ -34,11 +36,14 @@ RUN apt-get clean all
 
 #switch to ansible user and install and configure zsh/ohmayzsh
 USER ansible
-RUN python3 -m venv "${VENV_NAME}"
 SHELL ["/bin/bash", "-c"]
+
+RUN python3 -m venv "${VENV_NAME}"
+
 RUN source "${VENV_NAME}"/bin/activate 
 ENV PATH="${VENV_NAME}/bin:/home/ansible/.local/bin:${PATH}"
 ENV ZSH="/home/ansible/.oh-my-zsh"
+
 RUN sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH}/custom/plugins/zsh-autosuggestions" ; \
     git clone https://github.com/zsh-users/zsh-completions "${ZSH}/custom/plugins/zsh-completions"; \
@@ -47,12 +52,19 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH}/custom/pl
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH}/custom/plugins/zsh-syntax-highlighting" ;\
     git clone --depth 1 https://github.com/junegunn/fzf.git "/home/ansible/.fzf" ;\
     /home/ansible/.fzf/install
-COPY zshrc_config.txt "${ANSIBLE_HOME}"/.zshrc
+
 
 # Upgrade pip to the lastest in user context
 RUN pip3 install --upgrade pip; 
 # Finaly install Ansible and set environment
 RUN pip3 install ansible;
+
+# copy ssh keys and ZSH configuration into image
+COPY config .
+RUN mv "${ANSIBLE_HOME}"/config/zsh/.zshrc "${ANSIBLE_HOME} ; \
+#COPY zshrc_config.txt "${ANSIBLE_HOME}"/.zshrc
+    mv "${ANSIBLE_HOME}"/config/ssh_keys/* "${ANSIBLE_HOME}"/.ssh
+RUN rm -rf config
 
 # Set the default shell to zsh
 CMD ["/bin/zsh"]    
