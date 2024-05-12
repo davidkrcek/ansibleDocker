@@ -67,9 +67,9 @@ RUN pip3 install ansible;
 # copy ssh keys and ZSH configuration into image
 RUN echo zsh config and ssh keys
 COPY config .
-RUN mv "${ANSIBLE_HOME}"/config/zsh/.zshrc "${ANSIBLE_HOME} ; \
+RUN mv "${ANSIBLE_HOME}/config/zsh/.zshrc" "${ANSIBLE_HOME}/" ; \
 #COPY zshrc_config.txt "${ANSIBLE_HOME}"/.zshrc
-    mv "${ANSIBLE_HOME}"/config/ssh_keys/* "${ANSIBLE_HOME}"/.ssh
+    mv "${ANSIBLE_HOME}/config/ssh_keys/*" "${ANSIBLE_HOME}/.ssh/"
 RUN rm -rf config
 
 # Set the default shell to zsh
