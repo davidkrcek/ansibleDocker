@@ -3,6 +3,7 @@ FROM ubuntu:latest
 
 # Environments
 ARG ANSIBLE_USER="ansible"
+ARG ANSIBLE_USER_UID="1002"
 ARG ANSIBLE_HOME="/home/ansible"
 ARG ANSIBLE_WORKDIR="/install/ansible"
 ENV VENV_NAME="${ANSIBLE_HOME}/venv"
@@ -27,7 +28,7 @@ RUN mv /tmp/cacerts/* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
 # create ansible user 
-RUN useradd -m -s /bin/zsh -G sudo "${ANSIBLE_USER}"
+RUN useradd -m -s /bin/zsh -u "${ANSIBLE_USER_UID}" -G sudo "${ANSIBLE_USER}"
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p "${ANSIBLE_HOME}"/.ssh && mkdir -p "${ANSIBLE_WORKDIR}"
 RUN chown -R ansible:ansible "${ANSIBLE_HOME}"/.ssh
