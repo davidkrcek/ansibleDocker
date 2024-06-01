@@ -72,4 +72,4 @@ RUN sudo chown -R ansible:ansible ${ANSIBLE_HOME}/.zshrc
 CMD ["/bin/zsh"]    
 
 # Set workdir to your ansible direcotry
-WORKDIR /install/ansible
+WORKDIR {{ ANSIBLE_WORKDIR }}
