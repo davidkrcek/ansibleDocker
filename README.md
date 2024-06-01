@@ -23,8 +23,10 @@ docker build -t ansible-docker .
 
 To start a container based on this image, use the following command:
 
-``bash
+```bash
 docker run -it ansible-docker
+```
+
 The container will start with the zsh shell, and you will be in the working directory for Ansible.
 
 ## Dockerfile Contents
