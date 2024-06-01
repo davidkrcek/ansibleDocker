@@ -6,7 +6,7 @@ export TERM=xterm
 export FZF_BASE="~/.fzf"
 
 ##### Zsh/Oh-my-Zsh Configuration
-export ZSH="~/.oh-my-zsh"
+export ZSH="./.oh-my-zsh"
 
 ZSH_THEME="spaceship-prompt/spaceship"
 plugins=(git ssh-agent zsh-syntax-highlighting zsh-history-substring-search zsh-autosuggestions zsh-completions fzf  )
@@ -17,4 +17,4 @@ SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
 SPACESHIP_PROMPT_SEPARATE_LINE="false"
 source $ZSH/oh-my-zsh.sh
-[ -f ~/.fzf.zsh ] && source "~/.fzf.zsh"
+[ -f ~/.fzf.zsh ] && source .fzf.zsh
