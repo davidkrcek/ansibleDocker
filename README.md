@@ -57,6 +57,7 @@ To customize the configuration, modify the corresponding environment variables i
 - ANSIBLE_WORKDIR: attached directory from host to container
 
 - Copy all ssh keys (private keys) from ./config/ssh_keys to ANSIBLE_HOME/.ssh/
+
   **Please use a allways a secret when generating private keys**
 
 - If you build the docker image behind ZScaler or similar you can upload the necessary certificates to ./conifg/cacerts
