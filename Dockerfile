@@ -24,7 +24,6 @@ RUN apt-get clean all
 RUN apt-get install apt-transport-https ca-certificates -y 
 COPY config/cacerts /tmp/cacerts
 RUN mv /tmp/cacerts/* /usr/local/share/ca-certificates/
-#COPY ./cacerts* /usr/local/share/ca-certificates/
 RUN update-ca-certificates 
 
 # create ansible user 
