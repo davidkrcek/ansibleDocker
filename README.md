@@ -69,7 +69,9 @@ To customize the configuration, modify the corresponding environment variables i
 
 This project uses the following licenses:
 
-- CC BY-NC
-- Ubuntu: Ubuntu License
-- Zsh and Oh My Zsh: Zsh License
+- GPL-3.0 license
+- Ubuntu: Ubuntu License (https://hub.docker.com/_/ubuntu)
+- Zsh (https://github.com/zsh-users/zsh/tree/master)
+- Oh My Zsh: (https://github.com/ohmyzsh/ohmyzsh)
+
   For more information on the licenses of the installed packages, please consult the respective documentation.
