@@ -11,7 +11,7 @@ It includes various tools and configurations to facilitate working with Ansible.
 - [Configuration](#configuration)
 - [Licenses](#licenses)
 
-## Installation
+## Build
 
 To build the Docker image, run the following command in the directory of the Dockerfile:
 
