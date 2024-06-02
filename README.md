@@ -5,7 +5,7 @@ It includes various tools and configurations to facilitate working with Ansible.
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Build](#build)
 - [Usage](#usage)
 - [Dockerfile Contents](#dockerfile-contents)
 - [Configuration](#configuration)
@@ -16,15 +16,37 @@ It includes various tools and configurations to facilitate working with Ansible.
 To build the Docker image, run the following command in the directory of the Dockerfile:
 
 ```bash
-docker build -t ansible-docker .
+docker build -t ansible_docker .
 ```
 
 ## Usage
 
-To start a container based on this image, use the following command:
+### Quickstart start from docker hub
 
 ```bash
-docker run -it ansible-docker
+docker run -it -d --name ansible_docker rotecodefraktion/ansible_docker
+```
+
+Mount an persistent directory (e.g /tmp/ansible_docker ) to the container run and name the container ansible
+
+```bash
+docker run -v /tmp/docker_ansible:/install/ansible -it -d --name ansible_docker rotecodefraktion/ansible_docker
+```
+
+You can create a fresh ssh key-pair with ssh-keygen inside the container or you can use your own ssh key from outside the container. To copy your own ssh-key to the container:
+
+```bash
+docker cp ~/.ssh/id_rsa ansible_docker:/home/ansible/.ssh/
+docker exec -u 0 -it ansible_docker chown ansible:ansible /home/ansible/.ssh/id_rsa
+docker exec -it ansible_docker /bin/zsh
+```
+
+### Build your on image
+
+```bash
+git clone ttps://github.com/davidkrcek/docker_ansible.git
+docker build -t ansible_docker .
+docker run -it -d --name ansible_docker ansible_docker
 ```
 
 The container will start with the zsh shell, and you will be in the working directory for Ansible.
@@ -34,6 +56,7 @@ The container will start with the zsh shell, and you will be in the working dire
 The Dockerfile installs the following packages and configures the environment:
 
 - Base Image: Latest version of Ubuntu.
+
   - gcc
   - python3 python3-pip python3-venv
   - wget curl
@@ -43,6 +66,7 @@ The Dockerfile installs the following packages and configures the environment:
   - ohmyzsh
   - git
   - sudo
+
 - Environment Variables: Configures user and directories for Ansible.
 - User Creation: Creates a new user ansible and configures its environment.
 - Zsh and Oh My Zsh: Installs and configures zsh and Oh My Zsh with plugins and themes.
