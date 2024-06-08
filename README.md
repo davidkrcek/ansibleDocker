@@ -1,3 +1,5 @@
+[![Docker](https://github.com/davidkrcek/ansibleDocker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/davidkrcek/ansibleDocker/actions/workflows/docker-publish.yml)
+
 # Ansible Docker Container
 
 This Docker image is based on the latest minimal Ubuntu version and is prepared for use with Ansible.
